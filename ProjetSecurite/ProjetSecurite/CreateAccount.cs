@@ -35,7 +35,7 @@ namespace ProjetSecurite
         {
             bool isReady = false;
             string nomText = this.NomTextBox.Text;
-            if (Regex.IsMatch(nomText, @"^[a-zA-Z]+$") && nomText.Length <= 20)
+            if (Util.checkInputAlphbet(nomText) && nomText.Length <= 20)
             {
                 this.label7.Hide();
                 newUser.Nom = nomText;
@@ -53,7 +53,7 @@ namespace ProjetSecurite
         {
             bool isReady = false;
             string prenomText = this.prenomTextBox.Text;
-            if (Regex.IsMatch(prenomText, @"^[a-zA-Z]+$") && prenomText.Length <= 20)
+            if (Util.checkInputAlphbet(prenomText) && prenomText.Length <= 20)
             {
                 this.label8.Hide();
                 newUser.Prenom = prenomText;
@@ -71,7 +71,7 @@ namespace ProjetSecurite
         {
             bool isReady = false;
             string usernameText = this.UsernameTextBox.Text;
-            if (Regex.IsMatch(usernameText, @"^[a-zA-Z0-9]+$") && usernameText.Length <= 20)
+            if (Util.checkInputAlphNum(usernameText) && usernameText.Length <= 20)
             {
                 this.label9.Hide();
                 newUser.Username = usernameText;
@@ -89,7 +89,7 @@ namespace ProjetSecurite
         {
             bool isReady = false;
             string emailText = this.emailTextBox.Text;
-            if (Regex.IsMatch(emailText, @"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$") && emailText.Length <= 30)
+            if (Util.checkEmail(emailText) && emailText.Length <= 30)
             {
                 this.label10.Hide();
                 newUser.Email = emailText;
@@ -107,7 +107,7 @@ namespace ProjetSecurite
         {
             bool isReady = false;
             string password = this.pwTextBox.Text;
-            if (Regex.IsMatch(password, @"^[a-zA-Z0-9 !""#$%&'()*+,./:;<=>?@[\]^_`{|}~-]+$") && password.Length >= 8)
+            if (Util.checkPassword(password) && password.Length >= 8)
             {
                 this.label11.Hide();
                 newUser.Password = password;
@@ -140,13 +140,7 @@ namespace ProjetSecurite
 
         private bool checkForSubmit()
         {
-            bool isReadyForSubmit = false;
-            isReadyForSubmit = checkNomTextBox();
-            isReadyForSubmit = checkPreNomTextBox();
-            isReadyForSubmit = checkUsernameTextBox();
-            isReadyForSubmit = checkEmailTextBox();
-            isReadyForSubmit = checkPasswordTextBox();
-            isReadyForSubmit =checkConfirmPWTextBox();
+            bool isReadyForSubmit = checkNomTextBox() && checkPreNomTextBox() && checkUsernameTextBox() && checkEmailTextBox() && checkPasswordTextBox() && checkConfirmPWTextBox();
             return isReadyForSubmit;
         }
 

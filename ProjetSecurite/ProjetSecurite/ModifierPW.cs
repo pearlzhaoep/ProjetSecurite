@@ -49,7 +49,7 @@ namespace ProjetSecurite
         {
             bool isReady = false;
             string password = this.pwTextBox.Text;
-            if (Regex.IsMatch(password, @"^[a-zA-Z0-9 !""#$%&'()*+,./:;<=>?@[\]^_`{|}~-]+$") && password.Length >= 8)
+            if (Util.checkPassword(password) && password.Length >= 8)
             {
                 this.label11.Hide();
                 userNewPW.Password = password;
@@ -81,10 +81,7 @@ namespace ProjetSecurite
         }
         private bool checkForSubmit()
         {
-            bool isReadyForSubmit = false;
-            isReadyForSubmit = checkCurrentPWInput();
-            isReadyForSubmit = checkPasswordTextBox();
-            isReadyForSubmit = checkConfirmPWTextBox();
+            bool isReadyForSubmit = checkCurrentPWInput() && checkPasswordTextBox() && checkConfirmPWTextBox();
             return isReadyForSubmit;
         }
         private void buttonCreate_Click(object sender, EventArgs e)

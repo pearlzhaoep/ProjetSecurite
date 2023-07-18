@@ -23,7 +23,8 @@ namespace ProjetSecurite
         
         private MySqlConnection connectToDB()
         {
-            string connectionString = "server=localhost;database=userlogininfo;uid=root;pwd=;";
+            string DBconnectionPath = Path.Combine(Directory.GetCurrentDirectory(), "dbchemin.txt");
+            string connectionString = File.ReadAllLines(DBconnectionPath)[0];
             MySqlConnection cnn = new MySqlConnection(connectionString);
             try
             {
@@ -42,8 +43,7 @@ namespace ProjetSecurite
             try
             {
                 cnn = connectToDB();
-                string DBconnectionPath = Path.Combine(Directory.GetCurrentDirectory(), "dbchemin.txt");
-                string sql = File.ReadAllLines(DBconnectionPath)[0];
+                string sql = "INSERT INTO autruchelogindata (nom, prenom, username, email, salt, hashedmotdepasse) VALUES (@nom, @prenom, @username, @email, @salt, @hashedmotdepasse)";
                 MySqlCommand commande = new MySqlCommand(sql, cnn);
                 commande.Parameters.AddWithValue("@nom", newUser.Nom);
                 commande.Parameters.AddWithValue("@prenom", newUser.Prenom);
@@ -196,15 +196,7 @@ namespace ProjetSecurite
 
         private void compareHashing(string inputPW, string hashedPW)
         {
-            string hashedInputPW = "";
-            using (SHA256 sha256Hashing = SHA256.Create())
-            {
-                byte[] hashValue = sha256Hashing.ComputeHash(Encoding.UTF8.GetBytes(inputPW));
-                foreach (byte b in hashValue)
-                {
-                    hashedInputPW += $"{b:X2}";
-                }
-            }
+            string hashedInputPW = Util.hashing(inputPW);
             if (!hashedInputPW.Equals(hashedPW))
             {
                 handleFailedAttempt();

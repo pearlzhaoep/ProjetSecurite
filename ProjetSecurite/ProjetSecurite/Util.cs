@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Org.BouncyCastle.Bcpg.OpenPgp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProjetSecurite
@@ -21,6 +23,23 @@ namespace ProjetSecurite
                 }
             }
             return hashedmessage;
+        }
+
+        public static bool checkInputAlphbet(string input)
+        {
+            return Regex.IsMatch(input, @"^[a-zA-Z]+$");
+        }
+        public static bool checkInputAlphNum(string input)
+        {
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9]+$");
+        }
+        public static bool checkEmail(string input)
+        {
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+        }
+        public static bool checkPassword(string input)
+        {
+            return Regex.IsMatch(input, @"^[a-zA-Z0-9 !""#$%&'()*+,./:;<=>?@[\]^_`{|}~-]+$");
         }
     }
 }
