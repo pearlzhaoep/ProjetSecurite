@@ -1,0 +1,1 @@
+INSERT INTO autruchelogindata (nom, prenom, username, email, salt, hashedmotdepasse) VALUES (@nom, @prenom, @username, @email, @salt, @hashedmotdepasse)
